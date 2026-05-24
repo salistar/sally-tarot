@@ -4,7 +4,7 @@
  * @project SallyCards - Tarot
  */
 
-import React, { useReducer, useEffect, useCallback, useRef } from 'react';
+import React, { useReducer, useEffect, useCallback, useRef, useMemo } from 'react';
 import {
   View,
   Text,
@@ -16,7 +16,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import {
   gameReducer,
   initGame,
@@ -29,6 +29,10 @@ import {
   type GameState,
   type Suit,
 } from '../../src/game/tarotEngine';
+import {
+  parseDifficulty, BOT_PRESETS, thinkDelay, shouldRandomize,
+  difficultyBadge, difficultyColor,
+} from '@sally/game-engine';
 import { getCardImage, getCardBackImage } from '../../src/game/cardAssets';
 
 const CARD_WIDTH = 52;
@@ -41,6 +45,9 @@ const BOT_DELAY = 1000;
 
 export default function TarotLocalGame() {
   const router = useRouter();
+  const params = useLocalSearchParams<{ difficulty?: string }>();
+  const difficulty = useMemo(() => parseDifficulty(params.difficulty), [params.difficulty]);
+  const botConfig = BOT_PRESETS[difficulty];
   const [state, dispatch] = useReducer(gameReducer, null, () => {
     let s = initGame();
     s = gameReducer(s, {
@@ -79,11 +86,19 @@ export default function TarotLocalGame() {
     if (state.phase === 'waiting' || state.phase === 'scoring' || state.phase === 'game_over') return;
 
     botTimerRef.current = setTimeout(() => {
-      const action = botPlay(state);
+      let action = botPlay(state);
+      // Humanisation : easy/medium peut jouer sous-optimal
+      if (action && shouldRandomize(botConfig) && current.hand.length > 1) {
+        const playable = getPlayableCards(current.hand, state.currentTrick.leadSuit);
+        if (playable.length > 0) {
+          const rnd = playable[Math.floor(Math.random() * playable.length)];
+          action = { type: 'PLAY_CARD', playerId: current.id, cardId: rnd.id } as any;
+        }
+      }
       if (action) {
         dispatch(action);
       }
-    }, BOT_DELAY);
+    }, thinkDelay(botConfig));
 
     return () => {
       if (botTimerRef.current) clearTimeout(botTimerRef.current);
@@ -172,6 +187,9 @@ export default function TarotLocalGame() {
             <Text style={styles.backText}>{'< Back'}</Text>
           </TouchableOpacity>
           <Text style={styles.title}>Tarot</Text>
+          <View style={[styles.diffBadge, { backgroundColor: difficultyColor(difficulty) }]}>
+            <Text style={styles.diffBadgeText}>{difficultyBadge(difficulty)}</Text>
+          </View>
           <Text style={styles.phaseText}>
             {state.phase.toUpperCase()} | Round {state.roundNumber} | Trick{' '}
             {state.tricksPlayed + 1}/10
@@ -349,6 +367,8 @@ const styles = StyleSheet.create({
   backText: { color: '#FDE68A', fontSize: 16 },
   title: { color: '#fff', fontSize: 22, fontWeight: 'bold' },
   phaseText: { color: '#FDE68A', fontSize: 12, marginTop: 2 },
+  diffBadge: { paddingHorizontal: 8, paddingVertical: 3, borderRadius: 6, marginVertical: 4 },
+  diffBadgeText: { color: '#fff', fontSize: 10, fontWeight: '900', letterSpacing: 1 },
   infoRow: {
     flexDirection: 'row',
     justifyContent: 'center',
