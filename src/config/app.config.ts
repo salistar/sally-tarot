@@ -5,8 +5,8 @@
  */
 export const APP_CONFIG = {
   name: "Tarot",
-  primary: "#A855F7",
-  secondary: "#6B21A8",
+  primary: "#8B5CF6",
+  secondary: "#6D28D9",
   splash: {
     glow: "rgba(107,33,168,0.6)",
     sallyGlow: "rgba(168,85,247,0.8)",

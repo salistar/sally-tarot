@@ -1,26 +1,55 @@
 {
-  "cli": { "version": ">= 13.0.0" },
+  "cli": {
+    "version": ">= 13.0.0"
+  },
   "build": {
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "android": { "buildType": "apk" },
-      "ios": { "simulator": true }
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "simulator": true
+      }
     },
     "preview": {
       "distribution": "internal",
-      "android": { "buildType": "apk" }
+      "android": {
+        "buildType": "apk"
+      },
+      "credentialsSource": "local"
     },
     "production": {
       "autoIncrement": true,
-      "android": { "buildType": "app-bundle" },
-      "ios": { "image": "latest" }
+      "android": {
+        "buildType": "app-bundle"
+      },
+      "ios": {
+        "image": "latest"
+      },
+      "credentialsSource": "local"
+    },
+    "production-apk": {
+      "autoIncrement": true,
+      "credentialsSource": "local",
+      "android": {
+        "buildType": "apk"
+      },
+      "ios": {
+        "image": "latest"
+      }
     }
   },
   "submit": {
     "production": {
-      "android": { "serviceAccountKeyPath": "./google-services.json", "track": "internal" },
-      "ios": { "appleId": "salistarcompany@gmail.com" }
+      "android": {
+        "serviceAccountKeyPath": "./google-services.json",
+        "track": "internal"
+      },
+      "ios": {
+        "appleId": "salistarcompany@gmail.com"
+      }
     }
   }
 }

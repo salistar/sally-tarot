@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Tarot",
+    "name": "Sally Tarot",
     "slug": "tarot",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,11 +8,11 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#1E1145",
+      "backgroundColor": "#6D28D9",
       "dark": {
         "image": "./assets/splash.png",
         "resizeMode": "contain",
-        "backgroundColor": "#1E1145"
+        "backgroundColor": "#6D28D9"
       }
     },
     "scheme": "sallycards",
@@ -30,18 +30,21 @@
       "package": "com.sallycards.tarot",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#D97706"
+        "backgroundColor": "#8B5CF6"
       },
       "usesCleartextTraffic": true,
       "permissions": [
         "ACCESS_FINE_LOCATION",
-        "ACCESS_COARSE_LOCATION"
+        "ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
       ],
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyAa1lBSroSXA-Om4mio84-SWAcmzQgYv8w"
         }
-      }
+      },
+      "versionCode": 3
     },
     "plugins": [
       "expo-router",
@@ -54,12 +57,16 @@
         }
       ]
     ],
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "extra": {
-      "eas": {
-        "projectId": "sallycards-tarot"
+      "usesCleartextTraffic": true,
+      "router": {
+        "origin": false
       },
-      "usesCleartextTraffic": true
-    }
+      "eas": {
+        "projectId": "6de11ae3-1b2e-4165-9016-c0e97a1e8f30"
+      }
+    },
+    "owner": "idriss.kriouile"
   }
 }

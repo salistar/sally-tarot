@@ -165,10 +165,33 @@ export default function ShopScreen() {
               </TouchableOpacity>
             );
           })}
+          <TouchableOpacity
+            onPress={() => Alert.alert('Sally Plus VIP', 'Abonnement Premium VIP\n\n4,99 € / mois ou 39,99 € / an (-33%)\n\nAvantages:\n• +50 coins par achat\n• Sans publicité\n• Matchmaking prioritaire\n• Badge VIP exclusif\n\nDisponible prochainement.')}
+            activeOpacity={0.85}
+            style={styles.pkgWrap}
+          >
+            <LinearGradient
+              colors={['#FFD700', palette.accent]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={[styles.pkg, { borderColor: '#FFD700', borderWidth: 2 }]}
+            >
+              <View style={[styles.ribbon, { backgroundColor: '#FFD700' }]}>
+                <Text style={[styles.ribbonText, { color: '#78350F' }]}>PREMIUM VIP</Text>
+              </View>
+              <Text style={styles.pkgIcon}>👑</Text>
+              <Text style={styles.pkgName}>Sally Plus VIP</Text>
+              <Text style={styles.pkgCoins}>+50</Text>
+              <Text style={styles.pkgCoinsLabel}>coins par achat · sans pub · badge exclusif</Text>
+              <View style={styles.priceBtn}>
+                <Text style={styles.priceText}>4,99 € / mois</Text>
+              </View>
+            </LinearGradient>
+          </TouchableOpacity>
           <View style={styles.disclaimer}>
             <Ionicons name="information-circle-outline" size={16} color={palette.textSecondary} />
             <Text style={[styles.disclaimerText, { color: palette.textSecondary }]}>
-              Les Sally Coins sont une monnaie virtuelle, utilisables uniquement dans l\u2019app.
+              Les Sally Coins sont une monnaie virtuelle, utilisables uniquement dans l'app.
             </Text>
           </View>
         </ScrollView>
