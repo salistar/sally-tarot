@@ -103,9 +103,9 @@ android {
         }
         release {
             storeFile file('sallycards-tarot.jks')
-            storePassword 'SallyCards2026'
+            storePassword 'SallyCards2027'
             keyAlias 'sallycards-tarot'
-            keyPassword 'SallyCards2026'
+            keyPassword 'SallyCards2027'
         }
     }
     buildTypes {

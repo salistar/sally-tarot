@@ -49,4 +49,7 @@ coverage/
 junit.xml
 
 .gh-watch-state
-.gh-artifacts/
+.gh-artifacts/credentials.json
+credentials/
+*.jks
+android/app/*.jks
